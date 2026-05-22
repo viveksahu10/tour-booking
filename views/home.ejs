@@ -1,0 +1,210 @@
+<%- include('partials/header', { title: 'WanderLux Tours - Discover India', page: 'home' }) %>
+
+<!-- Flash Messages -->
+<% if (messages && messages.success && messages.success.length > 0) { %>
+<div class="flash flash-success"><i class="fas fa-check-circle"></i> <%= messages.success[0] %></div>
+<% } %>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="hero-tagline">Discover the extraordinary</p>
+        <h1 class="hero-title">Journey Into<br><em>India's Soul</em></h1>
+        <p class="hero-sub">Handcrafted travel experiences that transform the way you see the world. From Himalayan peaks to tropical shores.</p>
+        <div class="hero-actions">
+            <a href="/booking" class="btn-primary">Explore Tours</a>
+            <a href="/about" class="btn-ghost">Our Story</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-num">2,400+</span>
+                <span class="stat-label">Happy Travelers</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+                <span class="stat-num">48</span>
+                <span class="stat-label">Destinations</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+                <span class="stat-num">12 Yrs</span>
+                <span class="stat-label">Experience</span>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <span>Scroll to explore</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</section>
+
+<!-- Features Strip -->
+<section class="features-strip">
+    <div class="feature-item">
+        <i class="fas fa-shield-alt"></i>
+        <div>
+            <h4>100% Safe Travel</h4>
+            <p>Verified guides & insurance</p>
+        </div>
+    </div>
+    <div class="feature-item">
+        <i class="fas fa-headset"></i>
+        <div>
+            <h4>24/7 Support</h4>
+            <p>Always here for you</p>
+        </div>
+    </div>
+    <div class="feature-item">
+        <i class="fas fa-star"></i>
+        <div>
+            <h4>Top Rated</h4>
+            <p>4.8★ average rating</p>
+        </div>
+    </div>
+    <div class="feature-item">
+        <i class="fas fa-tags"></i>
+        <div>
+            <h4>Best Price</h4>
+            <p>Price match guarantee</p>
+        </div>
+    </div>
+</section>
+
+<!-- Tours Section -->
+<section class="tours-section">
+    <div class="section-header">
+        <p class="section-eyebrow">Curated Experiences</p>
+        <h2 class="section-title">Our Signature <em>Tours</em></h2>
+        <p class="section-sub">Each journey is thoughtfully designed to immerse you in authentic culture, stunning landscapes, and unforgettable moments.</p>
+    </div>
+    <div class="tours-grid">
+        <% tours.forEach(tour => { %>
+        <div class="tour-card">
+            <div class="tour-img-wrap">
+                <img src="<%= tour.image_url %>" alt="<%= tour.title %>" loading="lazy">
+                <span class="tour-badge"><%= tour.category %></span>
+                <div class="tour-rating"><i class="fas fa-star"></i> <%= tour.rating %></div>
+            </div>
+            <div class="tour-body">
+                <h3><%= tour.title %></h3>
+                <p class="tour-location"><i class="fas fa-map-marker-alt"></i> <%= tour.location %></p>
+                <p class="tour-desc"><%= tour.description.substring(0, 90) %>...</p>
+                <div class="tour-meta">
+                    <span><i class="fas fa-clock"></i> <%= tour.duration %></span>
+                    <span><i class="fas fa-users"></i> Max <%= tour.max_capacity %></span>
+                </div>
+                <div class="tour-footer">
+                    <div class="tour-price">
+                        <span class="from">from</span>
+                        <span class="amount">₹<%= Number(tour.price).toLocaleString() %></span>
+                        <span class="per">/ person</span>
+                    </div>
+                    <a href="/booking?tour=<%= tour.id %>" class="btn-book">Book Now</a>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+    <div class="section-cta">
+        <a href="/booking" class="btn-primary">View All Tours</a>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-section">
+    <div class="why-image">
+        <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800" alt="India Travel">
+        <div class="why-badge-float">
+            <i class="fas fa-award"></i>
+            <span>Award Winning<br>Travel Agency</span>
+        </div>
+    </div>
+    <div class="why-content">
+        <p class="section-eyebrow">Why WanderLux</p>
+        <h2 class="section-title">Travel the world<br>with <em>confidence</em></h2>
+        <p>We believe travel should be transformative, not stressful. Our team of expert travel designers craft every detail of your journey so you can focus on what matters — the experience.</p>
+        <div class="why-list">
+            <div class="why-item">
+                <div class="why-icon"><i class="fas fa-route"></i></div>
+                <div>
+                    <h4>Tailor-Made Itineraries</h4>
+                    <p>Every trip is customized to your interests, pace, and budget.</p>
+                </div>
+            </div>
+            <div class="why-item">
+                <div class="why-icon"><i class="fas fa-user-tie"></i></div>
+                <div>
+                    <h4>Expert Local Guides</h4>
+                    <p>Passionate, certified guides who bring destinations to life.</p>
+                </div>
+            </div>
+            <div class="why-item">
+                <div class="why-icon"><i class="fas fa-hotel"></i></div>
+                <div>
+                    <h4>Handpicked Stays</h4>
+                    <p>Carefully selected accommodations that enhance your journey.</p>
+                </div>
+            </div>
+        </div>
+        <a href="/about" class="btn-primary">Learn More About Us</a>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials-section">
+    <div class="section-header">
+        <p class="section-eyebrow">Traveler Stories</p>
+        <h2 class="section-title">What Our Guests <em>Say</em></h2>
+    </div>
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"The Kerala backwaters tour was the most peaceful experience of my life. Everything was perfectly organized. WanderLux truly delivers magic!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">PR</div>
+                <div>
+                    <h5>Priya Ramesh</h5>
+                    <span>Mumbai</span>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card featured-testimonial">
+            <div class="stars">★★★★★</div>
+            <p>"The Rajasthan Royal Tour exceeded all expectations. Our guide Raju made history come alive at every fort and palace. Truly a royal experience!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">AK</div>
+                <div>
+                    <h5>Arjun Kapoor</h5>
+                    <span>Bangalore</span>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"Booked the Himalayan Adventure and it was life-changing. The team handled everything flawlessly. Will definitely book again!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">SS</div>
+                <div>
+                    <h5>Sneha Sharma</h5>
+                    <span>Delhi</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Ready to Begin Your Adventure?</h2>
+        <p>Join thousands of happy travelers who have explored India with WanderLux.</p>
+        <div class="cta-actions">
+            <a href="/booking" class="btn-primary">Book Your Tour</a>
+            <a href="/contact" class="btn-ghost-dark">Talk to Us</a>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

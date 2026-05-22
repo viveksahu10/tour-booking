@@ -1,0 +1,129 @@
+<%- include('partials/header', { title: 'Book a Tour - WanderLux', page: 'booking' }) %>
+
+<!-- Page Hero -->
+<section class="page-hero short-hero">
+    <div class="page-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=1600')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+        <p class="section-eyebrow light">Plan Your Journey</p>
+        <h1>Book Your <em>Tour</em></h1>
+        <p>Choose your destination and let the adventure begin</p>
+    </div>
+</section>
+
+<!-- Flash Messages -->
+<% if (messages && messages.success && messages.success.length > 0) { %>
+<div class="flash flash-success"><i class="fas fa-check-circle"></i> <%= messages.success[0] %></div>
+<% } %>
+<% if (messages && messages.error && messages.error.length > 0) { %>
+<div class="flash flash-error"><i class="fas fa-exclamation-circle"></i> <%= messages.error[0] %></div>
+<% } %>
+
+<!-- Booking Form + Tours -->
+<section class="booking-section">
+    <div class="booking-grid">
+
+        <!-- Booking Form -->
+        <div class="booking-form-wrap">
+            <div class="form-card">
+                <h2><i class="fas fa-calendar-check"></i> Reserve Your Spot</h2>
+                <% if (!user) { %>
+                <div class="login-prompt">
+                    <i class="fas fa-lock"></i>
+                    <p>Please <a href="/auth/login">log in</a> or <a href="/auth/signup">sign up</a> to make a booking.</p>
+                </div>
+                <% } %>
+                <form action="/booking" method="POST" class="<%= !user ? 'form-disabled' : '' %>">
+                    <div class="form-group">
+                        <label>Select Tour *</label>
+                        <select name="tour_id" required id="tourSelect" <%= !user ? 'disabled' : '' %>>
+                            <option value="">-- Choose a Tour --</option>
+                            <% tours.forEach(t => { %>
+                            <option value="<%= t.id %>" data-price="<%= t.price %>" data-duration="<%= t.duration %>"><%= t.title %> — ₹<%= Number(t.price).toLocaleString() %>/person</option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Travel Date *</label>
+                            <input type="date" name="travel_date" required min="<%= new Date().toISOString().split('T')[0] %>" <%= !user ? 'disabled' : '' %>>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of People *</label>
+                            <input type="number" name="num_people" min="1" max="20" value="1" required id="numPeople" <%= !user ? 'disabled' : '' %>>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Special Requests</label>
+                        <textarea name="special_requests" rows="3" placeholder="Any dietary requirements, preferences, or special needs..." <%= !user ? 'disabled' : '' %>></textarea>
+                    </div>
+                    <div class="price-estimate" id="priceEstimate" style="display:none;">
+                        <span class="pe-label">Estimated Total:</span>
+                        <span class="pe-amount" id="peAmount">₹0</span>
+                    </div>
+                    <button type="submit" class="btn-submit" <%= !user ? 'disabled' : '' %>>
+                        <i class="fas fa-check"></i> Confirm Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tour Cards -->
+        <div class="tours-list">
+            <h2 class="list-title">Available Tours</h2>
+            <div class="tour-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="Cultural">Cultural</button>
+                <button class="filter-btn" data-filter="Adventure">Adventure</button>
+                <button class="filter-btn" data-filter="Beach">Beach</button>
+                <button class="filter-btn" data-filter="Nature">Nature</button>
+            </div>
+            <div class="tours-list-grid">
+                <% tours.forEach(tour => { %>
+                <div class="tour-list-card" data-category="<%= tour.category %>">
+                    <img src="<%= tour.image_url %>" alt="<%= tour.title %>">
+                    <div class="tlc-body">
+                        <div class="tlc-header">
+                            <span class="tour-badge-sm"><%= tour.category %></span>
+                            <span class="tlc-rating"><i class="fas fa-star"></i> <%= tour.rating %></span>
+                        </div>
+                        <h3><%= tour.title %></h3>
+                        <p><i class="fas fa-map-marker-alt"></i> <%= tour.location %></p>
+                        <div class="tlc-meta">
+                            <span><i class="fas fa-clock"></i> <%= tour.duration %></span>
+                            <span><i class="fas fa-users"></i> Max <%= tour.max_capacity %></span>
+                        </div>
+                        <div class="tlc-footer">
+                            <span class="tlc-price">₹<%= Number(tour.price).toLocaleString() %><small>/person</small></span>
+                            <button class="btn-select-tour" data-id="<%= tour.id %>" data-name="<%= tour.title %>">Select</button>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Info -->
+<section class="booking-info">
+    <div class="binfo-grid">
+        <div class="binfo-item">
+            <i class="fas fa-shield-alt"></i>
+            <h4>Secure Booking</h4>
+            <p>Your data is encrypted and transactions are fully secure.</p>
+        </div>
+        <div class="binfo-item">
+            <i class="fas fa-undo"></i>
+            <h4>Free Cancellation</h4>
+            <p>Cancel up to 48 hours before departure for a full refund.</p>
+        </div>
+        <div class="binfo-item">
+            <i class="fas fa-headset"></i>
+            <h4>Expert Support</h4>
+            <p>Our team is available 24/7 to assist with your booking.</p>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
